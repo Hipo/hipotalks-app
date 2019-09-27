@@ -20,6 +20,7 @@ class Event(AbstractBaseModel):
     event_type = models.CharField(choices=EVENT_TYPE_CHOICES, max_length=255)
     date = models.DateField()
     is_completed = models.BooleanField(default=False)
+    is_canceled = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Event'
