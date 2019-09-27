@@ -4,8 +4,8 @@ from hipotalks.events.models import Event
 
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('date', 'event_type', 'get_users', 'is_completed', 'get_canceled_users')
-    list_filter = ('event_type', 'is_completed', 'users__username')
+    list_display = ('date', 'event_type', 'get_users', 'is_completed', 'get_canceled_users', 'is_canceled')
+    list_filter = ('event_type', 'is_completed', 'is_canceled', 'users__username')
 
     def get_users(self, obj):
         return ', '.join([user.full_name for user in obj.users.all()])

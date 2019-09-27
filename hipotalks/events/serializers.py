@@ -7,6 +7,7 @@ from hipotalks.users.serializers import UserSerializer, BaseUserSerializer
 class EventSerializer(serializers.ModelSerializer):
     from hipotalks.presentations.serializers import PresentationSerializer
     presentations = PresentationSerializer(many=True)
+    users = BaseUserSerializer(many=True)
     canceled_users = BaseUserSerializer(many=True)
 
     class Meta:
@@ -16,6 +17,7 @@ class EventSerializer(serializers.ModelSerializer):
             'event_type',
             'date',
             'presentations',
+            'users',
             'canceled_users',
             'is_completed',
             'creation_datetime',

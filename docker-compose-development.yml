@@ -45,3 +45,19 @@ services:
       timeout: 30s
       retries: 10
       start_period: 40s
+
+  scheduler:
+    build:
+      context: .
+      target: application_development
+    image: hipotalks_app
+    environment:
+      - DJANGO_SETTINGS_MODULE=hipotalks.settings.development
+    command: bash ./tools/scheduler.sh
+    container_name: scheduler
+    volumes:
+      - ".:/hipotalks"
+      - ".data/root:/root"
+    depends_on:
+      - hipotalks_app
+      - hipotalks_postgres

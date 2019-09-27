@@ -5,5 +5,5 @@ from hipotalks.events.serializers import EventSerializer
 
 
 class EventListAPIView(ListAPIView):
-    queryset = Event.objects.all()
+    queryset = Event.objects.filter(is_canceled=False)
     serializer_class = EventSerializer
