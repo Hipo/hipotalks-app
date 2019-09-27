@@ -13,7 +13,11 @@ p {
   align-items: center;
   justify-content: center;
   width: 100%;
+  position: fixed;
+  background-color: #F9F9F9;
+  top: 0;
   padding: 40px 0 30px 0;
+  z-index: 2;
 }
 
 .page-header-title {
@@ -31,7 +35,7 @@ p {
 
 .page-header-icon-link {
   position: absolute;
-  right: 50px;
+  right: 110px;
 }
 
 .page-header-icon {
@@ -44,7 +48,9 @@ p {
   flex-direction: column;
   align-items: center;
   padding: 0 110px;
+  margin-top: 110px;
   margin-bottom: 50px;
+  z-index: 1;
 }
 
 .page-body-load-previous-weeks-button {
@@ -73,6 +79,14 @@ p {
   box-shadow: 0px 2px 8px rgba(36, 50, 70, 0.1);
   border-radius: 10px;
   box-sizing: border-box;
+}
+
+.page-body-week-list-item-this-week {
+  border: solid 2px #27AE60;
+}
+
+.page-body-week-list-item-next-weeks {
+opacity: 0.5;
 }
 
 .page-body-week-list-item:not(:last-of-type) {
@@ -154,5 +168,9 @@ p {
     margin-top: 10px;
     border-top: 1px solid #E2E2E2;
     border-left: none;
+  }
+
+  .page-header-icon-link {
+    right: 40px;
   }
 }
