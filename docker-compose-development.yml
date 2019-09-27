@@ -1,0 +1,47 @@
+version: "3.4"
+services:
+
+  hipotalks_app:
+    build:
+      context: .
+      target: application_development
+    image: hipotalks_app
+    environment:
+      - DJANGO_SETTINGS_MODULE=hipotalks.settings.development
+    volumes:
+      - ".:/hipotalks"
+      - ".data/root:/root"
+    depends_on:
+      - hipotalks_postgres
+    ports:
+      - "8001:8001"
+    tty: true
+
+  nginx:
+    image: nginx:1.15.7
+    ports:
+      - "8000:80"
+    depends_on:
+      - hipotalks_app
+    container_name: hipotalks_nginx
+    volumes:
+      - ./conf/nginx_development.conf:/etc/nginx/conf.d/default.conf
+    restart: unless-stopped
+
+  hipotalks_postgres:
+    image: mdillon/postgis:11
+    environment:
+      - POSTGRES_DB=hipotalks
+      - POSTGRES_USER=hipotalks_dbu
+      - POSTGRES_PASSWORD_DEV=test
+    container_name: hipotalks_postgres
+    volumes:
+      - ".data/db:/var/lib/postgresql/data"
+    ports:
+     - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready --quiet || exit 1"]
+      interval: 1m
+      timeout: 30s
+      retries: 10
+      start_period: 40s
