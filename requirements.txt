@@ -1,0 +1,10 @@
+Django==2.2.4
+redis==3.3.8
+psycopg2==2.8.3
+django-suit==0.2.26
+djangorestframework==3.10.3
+hipo-drf-exceptions==0.1.1
+django-filter==2.2.0
+slackclient==2.2.0
+django-extensions==2.2.1
+git+https:/$HIPO_DJANGO_CORE_TOKEN:x-oauth-basic@github.com/Hipo/hipo-django-core.git@v0.0.6
