@@ -1,0 +1,253 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Hipotalks</title>
+
+  <link rel="stylesheet" type="text/css" href="styles/main.css" />
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="page">
+    <div class="page-header">
+      <p class="page-header-title">
+        <span class="page-header-title-part-one">hipo</span><span class="page-header-title-part-two">talks</span>
+      </p>
+
+      <a href="https://zoom.us/j/105444396" target="_blank" class="page-header-icon-link">
+        <img src="images/zoom.png" class="page-header-icon" alt="Zoom icon">
+      </a>
+    </div>
+
+    <div class="page-body" id="page-body">
+      <!-- <button class="page-body-load-previous-weeks-button">
+          PREVIOUS WEEKS
+          <img src="images/up-chevron.png" class="page-body-load-previous-weeks-button-icon" alt="up-chevron">
+        </button> -->
+    </div>
+  </div>
+</body>
+
+</html>
+
+<script>
+  fetch('http://ebc31af5.ngrok.io/api/events/', {
+    mode: 'cors',
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    }
+  })
+    .then(
+      function (response) {
+        if (response.status !== 200) {
+          console.log('Looks like there was a problem. Status Code: ' +
+            response.status);
+          return;
+        }
+
+        // Examine the text in the response
+        response.json().then(function (events) {
+          var eventHtml = "";
+
+          events.forEach(function (event) {
+            if (event.presentations.length || event.users.length || event.canceled_users.length) {
+              var eventDate = new Date(event.date);
+              var now = new Date();
+              var dateDiff = dateDiffAsDay(now, eventDate);
+              var eventItemClassName = ''
+              
+              if (dateDiff > 7) {
+                eventItemClassName = "page-body-week-list-item-next-weeks";
+              } else if (dateDiff >0) {
+                eventItemClassName = "page-body-week-list-item-this-week";
+              } else {
+                eventItemClassName= ""
+              }
+              eventHtml += `
+                <div class="page-body-week-list-item ${eventItemClassName}">
+                  <div class="page-body-week-list-item-cell page-body-week-list-item-talk-list-cell">
+              `;
+
+              event.presentations.forEach(function (presentation) {
+                var videoLink = presentation.video_link || "#";
+                var slideLink = presentation.slide_link || "#";
+                var videoLinkClassName = presentation.video_link ? "" : "page-body-week-list-item-talk-list-item-cell-icon-link-disabled";
+                var slideLinkClassName = presentation.slide_link ? "" : "page-body-week-list-item-talk-list-item-cell-icon-link-disabled";
+
+                eventHtml += `
+                    <div class="page-body-week-list-item-talk-list-item">
+                      <div class="page-body-week-list-item-talk-list-item-cell">
+                        <a href="${videoLink}" class="page-body-week-list-item-talk-list-item-cell-icon-link ${videoLinkClassName}" target="_blank">
+                          <img src="images/video.png" class="page-body-week-list-item-talk-list-item-cell-icon" alt="Zoom icon">
+                        </a>
+                      </div>
+
+                      <div class="page-body-week-list-item-talk-list-item-cell">
+                        <a href="${slideLink}" class="page-body-week-list-item-talk-list-item-cell-icon-link ${slideLinkClassName}" target="_blank">
+                          <img src="images/presentation.png" class="page-body-week-list-item-talk-list-item-cell-icon" alt="Zoom icon">
+                        </a>
+                      </div>
+
+                      <div class="page-body-week-list-item-talk-list-item-cell">
+                        <p class="page-body-week-list-item-talk-list-item-cell-talk-name">
+                          ${presentation.title}
+                        </p>
+
+                        <p class="page-body-week-list-item-talk-list-item-cell-speaker-name page-body-week-list-item-talk-list-item-cell-speaker-name-success">
+                          ${presentation.user.first_name} ${presentation.user.last_name}
+                        </p>
+                      </div>
+                    </div>
+                `;
+              });
+
+              event.canceled_users.forEach(function (canceled_user) {
+
+                eventHtml += `
+                    <div class="page-body-week-list-item-talk-list-item">
+                      <div class="page-body-week-list-item-talk-list-item-cell">
+                        <a href="#" class="page-body-week-list-item-talk-list-item-cell-icon-link page-body-week-list-item-talk-list-item-cell-icon-link-disabled" target="_blank">
+                          <img src="images/video.png" class="page-body-week-list-item-talk-list-item-cell-icon" alt="Zoom icon">
+                        </a>
+                      </div>
+
+                      <div class="page-body-week-list-item-talk-list-item-cell">
+                        <a href="#" class="page-body-week-list-item-talk-list-item-cell-icon-link page-body-week-list-item-talk-list-item-cell-icon-link-disabled" target="_blank">
+                          <img src="images/presentation.png" class="page-body-week-list-item-talk-list-item-cell-icon" alt="Zoom icon">
+                        </a>
+                      </div>
+
+                      <div class="page-body-week-list-item-talk-list-item-cell">
+                        <p class="page-body-week-list-item-talk-list-item-cell-talk-name">
+                          Cancelled Presentation
+                        </p>
+
+                        <p class="page-body-week-list-item-talk-list-item-cell-speaker-name page-body-week-list-item-talk-list-item-cell-speaker-name-fail">
+                          ${canceled_user.first_name} ${canceled_user.last_name}
+                        </p>
+                      </div>
+                    </div>
+                `;
+              });
+
+              event.users.forEach(function (user) {
+                // Delete this check after backend implementation
+                if (event.presentations.find(function (presentation) { return presentation.user.id == user.id }) == null &&
+                  event.canceled_users.find(function (canceled_user) { return canceled_user.id == user.id }) == null) {
+                  eventHtml += `
+                    <div class="page-body-week-list-item-talk-list-item">
+                      <div class="page-body-week-list-item-talk-list-item-cell">
+                        <a href="#" class="page-body-week-list-item-talk-list-item-cell-icon-link page-body-week-list-item-talk-list-item-cell-icon-link-disabled" target="_blank">
+                          <img src="images/video.png" class="page-body-week-list-item-talk-list-item-cell-icon" alt="Zoom icon">
+                        </a>
+                      </div>
+
+                      <div class="page-body-week-list-item-talk-list-item-cell">
+                        <a href="#" class="page-body-week-list-item-talk-list-item-cell-icon-link page-body-week-list-item-talk-list-item-cell-icon-link-disabled" target="_blank">
+                          <img src="images/presentation.png" class="page-body-week-list-item-talk-list-item-cell-icon" alt="Zoom icon">
+                        </a>
+                      </div>
+
+                      <div class="page-body-week-list-item-talk-list-item-cell">
+                        <p class="page-body-week-list-item-talk-list-item-cell-talk-name">
+                          Untitled
+                        </p>
+
+                        <p class="page-body-week-list-item-talk-list-item-cell-speaker-name">
+                          ${user.first_name} ${user.last_name}
+                        </p>
+                      </div>
+                    </div>
+                `;
+                }
+              });
+
+              eventHtml += `
+                  </div>
+                  <div class="page-body-week-list-item-cell page-body-week-list-item-date-cell">
+                    ${formatDate(event.date)}
+                  </div>
+                </div>
+              `;
+            }
+          });
+          document.getElementById("page-body").innerHTML = eventHtml;
+          document.getElementsByClassName("page-body-week-list-item-this-week")[0].scrollIntoView({
+            behavior:"smooth",
+            block:"center"
+          })
+        });
+      }
+    )
+    .catch(function (err) {
+      console.log('Fetch Error :-S', err);
+    });
+
+
+  function formatDate(date) {
+    var formattedDate = new Date(date);
+    var monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ];
+
+    //Bedo was here
+    var dayNames = [
+      "1st",
+      "2nd",
+      "3rd",
+      "4th",
+      "5th",
+      "6th",
+      "7th",
+      "8th",
+      "9th",
+      "10th",
+      "11st",
+      "12nd",
+      "13rd",
+      "14th",
+      "15th",
+      "16th",
+      "17th",
+      "18th",
+      "19th",
+      "20th",
+      "21st",
+      "22nd",
+      "23rd",
+      "24th",
+      "25th",
+      "26th",
+      "27th",
+      "28th",
+      "29th",
+      "30th",
+      "31st"
+    ];
+
+    console.log(formattedDate.getDate());
+    // made by Tolga(space before dayNames)
+    return monthNames[formattedDate.getMonth()] + "<br/>" + dayNames[formattedDate.getDate() - 1];
+  }
+
+  function dateDiffAsDay(d1, d2) {
+    var t2 = d2.getTime();
+    var t1 = d1.getTime();
+    return parseInt((t2 - t1) / (24 * 3600 * 1000));
+  }
+
+</script>
