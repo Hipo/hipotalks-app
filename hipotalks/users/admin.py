@@ -19,7 +19,7 @@ class UserAdmin(BaseUserAdmin):
             )
         }),
         (_(u'General Informations'), {
-            'fields': ('last_login', 'date_joined')
+            'fields': ('last_login', 'update_datetime')
         }),
         (_(u'Permissions'), {
             'fields': (
@@ -28,7 +28,7 @@ class UserAdmin(BaseUserAdmin):
             )
         }),
     )
-    readonly_fields = ('last_login', 'date_joined')
+    readonly_fields = ('last_login', 'update_datetime')
 
     add_fieldsets = (
         (None, {

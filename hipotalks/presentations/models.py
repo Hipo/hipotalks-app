@@ -1,24 +1,16 @@
 from django.db import models
 from hipo_django_core.models import AbstractBaseModel
-
-from hipotalks.events.models import Event
-from hipotalks.users.models import User
+from django.utils.translation import ugettext_lazy as _
 
 
 class Presentation(AbstractBaseModel):
     """
     It keeps presentations.
     """
-    user = models.ForeignKey(User, related_name='presentations', on_delete=models.PROTECT)
-    event = models.ForeignKey(Event, related_name='presentations', on_delete=models.PROTECT)
-    title = models.CharField(max_length=255)
-    slide_link = models.URLField(max_length=255, blank=True, null=True)
-    video_link = models.URLField(max_length=255, blank=True, null=True)
+    title = models.CharField(_('Title'), max_length=255)
+    slide_link = models.CharField(_('Slide Link'), max_length=255)
+    video_link = models.CharField(_('Video Link'), max_length=255, blank=True)
 
     class Meta:
-        verbose_name = 'Presentation'
-        verbose_name_plural = 'Presentations'
-        ordering = ('creation_datetime', )
-
-    def __str__(self):
-        return f'{self.title} - {self.user}'
+        verbose_name = _('Presentation')
+        verbose_name_plural = _('Presentations')

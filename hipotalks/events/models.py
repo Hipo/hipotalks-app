@@ -15,12 +15,8 @@ class Event(AbstractBaseModel):
         (EVENT_TYPE_TOWNHALL, 'Townhall')
     )
 
-    users = models.ManyToManyField(User, related_name='events')
-    canceled_users = models.ManyToManyField(User, related_name='canceled_events', blank=True, null=True)
     event_type = models.CharField(choices=EVENT_TYPE_CHOICES, max_length=255)
     date = models.DateField()
-    is_completed = models.BooleanField(default=False)
-    is_canceled = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Event'

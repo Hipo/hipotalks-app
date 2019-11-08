@@ -13,7 +13,6 @@ class User(AbstractBaseModel, AbstractBaseUser, PermissionsMixin):
     username = models.CharField(_('Username'), max_length=150, unique=True)
     first_name = models.CharField(_('First Name'), max_length=255)
     last_name = models.CharField(_('Last Name'), max_length=255, blank=True)
-    date_joined = models.DateTimeField(_('Date Joined'), auto_now_add=True, editable=False)
     is_active = models.BooleanField(verbose_name=_('Active Status'), default=True)
     is_staff = models.BooleanField(verbose_name=_('Staff Status'), default=False)
 

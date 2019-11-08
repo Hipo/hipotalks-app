@@ -46,8 +46,8 @@ INSTALLED_APPS = [
     'hipotalks.users',
     'hipotalks.events',
     'hipotalks.presentations',
-    'hipotalks.blacklist',
     'hipotalks.notifications',
+    'hipotalks.slots',
 ]
 
 MIDDLEWARE = [
