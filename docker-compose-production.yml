@@ -10,9 +10,7 @@ services:
       - DJANGO_SETTINGS_MODULE=hipotalks.settings.production
     depends_on:
       - hipotalks_postgres
-    command: gunicorn --config conf/gunicorn-production.conf.py hipotalks.wsgi
-    ports:
-      - "8000:8000"
+    command: gunicorn --bind 0.0.0.0:8000 hipotalks.wsgi --timeout 300
     tty: true
 
   nginx:
