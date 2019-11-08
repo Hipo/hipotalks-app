@@ -1,25 +1,23 @@
 from os.path import dirname, abspath
 
 from .base import *
-from .secrets_development import *
+from .secrets_production import *
 
-ALLOWED_HOSTS += [
-    '.ngrok.io',
-]
+DEBUG = False
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'hipotalks',
+        'NAME': 'hipotalks_production',
         'USER': 'hipotalks_dbu',
-        'PASSWORD': 'test',
+        'PASSWORD': 'wlkrtjesrlkna',
         'HOST': 'hipotalks_postgres',
         'PORT': '5432',
     }
 }
 
 
-BASE_URL = 'http://localhost:8000'
+BASE_URL = ''
 
 
 MEDIA_ROOT = os.path.join(dirname(dirname(dirname(abspath(__file__)))), 'media/files/')
