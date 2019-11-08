@@ -6,7 +6,7 @@
 
   <title>Hipotalks</title>
 
-  <link rel="stylesheet" type="text/css" href="styles/main.css" />
+  <link rel="stylesheet" type="text/css" href="static/styles/main.css" />
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600&display=swap" rel="stylesheet">
 </head>
 
@@ -18,7 +18,7 @@
       </p>
 
       <a href="https://zoom.us/j/105444396" target="_blank" class="page-header-icon-link">
-        <img src="images/zoom.png" class="page-header-icon" alt="Zoom icon">
+        <img src="static/images/zoom.png" class="page-header-icon" alt="Zoom icon">
       </a>
     </div>
 
@@ -34,7 +34,7 @@
 </html>
 
 <script>
-  fetch('http://ebc31af5.ngrok.io/api/events/', {
+  fetch('http://localhost:8000/api/events/', {
     mode: 'cors',
     headers: {
       'Access-Control-Allow-Origin': '*'
@@ -81,13 +81,13 @@
                     <div class="page-body-week-list-item-talk-list-item">
                       <div class="page-body-week-list-item-talk-list-item-cell">
                         <a href="${videoLink}" class="page-body-week-list-item-talk-list-item-cell-icon-link ${videoLinkClassName}" target="_blank">
-                          <img src="images/video.png" class="page-body-week-list-item-talk-list-item-cell-icon" alt="Zoom icon">
+                          <img src="static/images/video.png" class="page-body-week-list-item-talk-list-item-cell-icon" alt="Zoom icon">
                         </a>
                       </div>
 
                       <div class="page-body-week-list-item-talk-list-item-cell">
                         <a href="${slideLink}" class="page-body-week-list-item-talk-list-item-cell-icon-link ${slideLinkClassName}" target="_blank">
-                          <img src="images/presentation.png" class="page-body-week-list-item-talk-list-item-cell-icon" alt="Zoom icon">
+                          <img src="static/images/presentation.png" class="page-body-week-list-item-talk-list-item-cell-icon" alt="Zoom icon">
                         </a>
                       </div>
 
@@ -110,13 +110,13 @@
                     <div class="page-body-week-list-item-talk-list-item">
                       <div class="page-body-week-list-item-talk-list-item-cell">
                         <a href="#" class="page-body-week-list-item-talk-list-item-cell-icon-link page-body-week-list-item-talk-list-item-cell-icon-link-disabled" target="_blank">
-                          <img src="images/video.png" class="page-body-week-list-item-talk-list-item-cell-icon" alt="Zoom icon">
+                          <img src="static/images/video.png" class="page-body-week-list-item-talk-list-item-cell-icon" alt="Zoom icon">
                         </a>
                       </div>
 
                       <div class="page-body-week-list-item-talk-list-item-cell">
                         <a href="#" class="page-body-week-list-item-talk-list-item-cell-icon-link page-body-week-list-item-talk-list-item-cell-icon-link-disabled" target="_blank">
-                          <img src="images/presentation.png" class="page-body-week-list-item-talk-list-item-cell-icon" alt="Zoom icon">
+                          <img src="static/images/presentation.png" class="page-body-week-list-item-talk-list-item-cell-icon" alt="Zoom icon">
                         </a>
                       </div>
 
@@ -141,13 +141,13 @@
                     <div class="page-body-week-list-item-talk-list-item">
                       <div class="page-body-week-list-item-talk-list-item-cell">
                         <a href="#" class="page-body-week-list-item-talk-list-item-cell-icon-link page-body-week-list-item-talk-list-item-cell-icon-link-disabled" target="_blank">
-                          <img src="images/video.png" class="page-body-week-list-item-talk-list-item-cell-icon" alt="Zoom icon">
+                          <img src="static/images/video.png" class="page-body-week-list-item-talk-list-item-cell-icon" alt="Zoom icon">
                         </a>
                       </div>
 
                       <div class="page-body-week-list-item-talk-list-item-cell">
                         <a href="#" class="page-body-week-list-item-talk-list-item-cell-icon-link page-body-week-list-item-talk-list-item-cell-icon-link-disabled" target="_blank">
-                          <img src="images/presentation.png" class="page-body-week-list-item-talk-list-item-cell-icon" alt="Zoom icon">
+                          <img src="static/images/presentation.png" class="page-body-week-list-item-talk-list-item-cell-icon" alt="Zoom icon">
                         </a>
                       </div>
 

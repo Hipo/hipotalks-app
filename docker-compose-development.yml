@@ -26,6 +26,7 @@ services:
     container_name: hipotalks_nginx
     volumes:
       - ./conf/nginx_development.conf:/etc/nginx/conf.d/default.conf
+      - ./frontend/:/hipotalks/frontend/
     restart: unless-stopped
 
   hipotalks_postgres:

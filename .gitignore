@@ -122,3 +122,5 @@ terraform.tfstate.backup
 
 
 /hipotalks/settings/secrets*py
+
+static
